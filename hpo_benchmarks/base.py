@@ -1,17 +1,18 @@
 from __future__ import annotations
 
+from abc import ABCMeta
+from abc import abstractmethod
 import pickle
 
 import numpy as np
 
 
-class NASBench201:
+class BaseHPOBench(metaclass=ABCMeta):
     def __init__(self, dataset_name: str, seed: int | None = None):
-        dataset_names = ["cifar10", "cifar100", "imagenet"]
-        if dataset_name not in dataset_names:
-            raise ValueError(f"dataset_name must be in {dataset_names}, but got {dataset_name}.")
+        if dataset_name not in self._dataset_names:
+            raise ValueError(f"dataset_name must be in {self._dataset_names}, but got {dataset_name}.")
 
-        self._dataset = pickle.load(open(f"nasbench201/{dataset_name}.pkl", mode="rb"))
+        self._dataset = pickle.load(open(f"hpo_benchmarks/datasets/{self._bench_name}/{dataset_name}.pkl", mode="rb"))
         self._dataset_name = dataset_name
         self._rng = np.random.RandomState(seed)
 
@@ -33,13 +34,26 @@ class NASBench201:
         return vals[seed]
 
     @property
+    @abstractmethod
+    def _dataset_names(self) -> list[str]:
+        raise NotImplementedError
+
+    @property
+    @abstractmethod
+    def _bench_name(self) -> str:
+        raise NotImplementedError
+
+    @property
+    @abstractmethod
     def direction(self) -> str:
-        return "maximize"
+        raise NotImplementedError
 
     @property
+    @abstractmethod
     def search_space(self) -> dict[str, list[int | float | str]]:
-        return {f"Op{i}": ["none", "skip_connect", "nor_conv_1x1", "nor_conv_3x3", "avg_pool_3x3"] for i in range(6)}
+        raise NotImplementedError
 
     @property
+    @abstractmethod
     def param_types(self) -> dict[str, type[int | float | str]]:
-        return {f"Op{i}": str for i in range(6)}
+        raise NotImplementedError
