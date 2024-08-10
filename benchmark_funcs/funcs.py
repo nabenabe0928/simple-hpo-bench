@@ -15,12 +15,11 @@ class BaseFunc(metaclass=ABCMeta):
         raise NotImplementedError
 
     def _validate_dim(self, X: np.ndarray) -> None:
-        if X.size != self.dim:
-            raise ValueError(f"The shape of X must be ({self.dim}, ), but got {X.shape}.")
+        if X.size != self._dim:
+            raise ValueError(f"The shape of X must be ({self._dim}, ), but got {X.shape}.")
 
-    @property
-    def dim(self) -> int:
-        return self._dim
+    def __str__(self) -> str:
+        return self.__class__.__name__
 
     @property
     def param_range(self) -> tuple[float, float]:

@@ -32,6 +32,10 @@ class HPOLib:
         return self._dataset[param_id][seed]
 
     @property
+    def direction(self) -> str:
+        return "minimize"
+
+    @property
     def search_space(self) -> dict[str, list[int | float | str]]:
         return {
             "activation_fn_1": ["relu", "tanh"],
