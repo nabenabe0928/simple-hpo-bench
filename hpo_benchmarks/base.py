@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from abc import ABCMeta
 from abc import abstractmethod
+import os
 import pickle
 
 import numpy as np
@@ -12,12 +13,15 @@ class BaseHPOBench(metaclass=ABCMeta):
         if dataset_name not in self._dataset_names:
             raise ValueError(f"dataset_name must be in {self._dataset_names}, but got {dataset_name}.")
 
-        self._dataset = pickle.load(open(f"hpo_benchmarks/datasets/{self._bench_name}/{dataset_name}.pkl", mode="rb"))
+        curdir = os.path.dirname(os.path.abspath(__file__))
+        self._dataset = pickle.load(
+            open(os.path.join(curdir, f"datasets/{self._bench_name}/{dataset_name}.pkl"), mode="rb")
+        )
         self._dataset_name = dataset_name
         self._rng = np.random.default_rng(seed)
 
     def __str__(self) -> str:
-        return f"{self.__class__.__name__}({self._dataset_name})"
+        return f'{self.__class__.__name__}(dataset_name="{self._dataset_name}")'
 
     def __call__(self, params: dict[str, int | float | str]) -> float:
         search_space = self.search_space

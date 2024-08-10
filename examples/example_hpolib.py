@@ -4,6 +4,7 @@ from hpo_benchmarks import HPOLib
 
 
 bench = HPOLib(dataset_name="naval_propulsion")
+print(bench)
 
 
 def objective(trial: optuna.Trial) -> float:
