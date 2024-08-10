@@ -14,7 +14,7 @@ class BaseHPOBench(metaclass=ABCMeta):
 
         self._dataset = pickle.load(open(f"hpo_benchmarks/datasets/{self._bench_name}/{dataset_name}.pkl", mode="rb"))
         self._dataset_name = dataset_name
-        self._rng = np.random.RandomState(seed)
+        self._rng = np.random.default_rng(seed)
 
     def __str__(self) -> str:
         return f"{self.__class__.__name__}({self._dataset_name})"
@@ -30,7 +30,7 @@ class BaseHPOBench(metaclass=ABCMeta):
         ]
         param_id = "".join(param_indices)
         vals = self._dataset[param_id]
-        seed = self._rng.randint(len(vals))
+        seed = self._rng.integers(len(vals))
         return vals[seed]
 
     @property

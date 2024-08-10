@@ -203,13 +203,13 @@ class Powell(BaseFunc):
 
 class Langermann(BaseFunc):
     _param_range = 5.0
+    _rng = np.random.default_rng(42)
 
     def __call__(self, X: np.ndarray) -> float:
         self._validate_dim(X)
         dim = X.size
         m = 5
-        rng = np.random.RandomState(42)
-        C = rng.randint(low=1, high=5, size=m).astype(np.float64)
-        A = rng.randint(low=1, high=10, size=(m, dim)).astype(np.float64)
+        C = self._rng.integers(low=1, high=5, size=m).astype(np.float64)
+        A = self._rng.integers(low=1, high=10, size=(m, dim)).astype(np.float64)
         exps = np.sum((X - A) ** 2, axis=-1)
         return (C * np.exp(-1 / np.pi * exps)) @ np.cos(np.pi * exps)
