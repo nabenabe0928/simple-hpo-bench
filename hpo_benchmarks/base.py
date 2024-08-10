@@ -23,9 +23,11 @@ class BaseHPOBench(metaclass=ABCMeta):
         search_space = self.search_space
         param_types = self.param_types
         param_indices = [
-            str(np.arange(len(search_space[param_name]))[np.isclose(value, search_space[param_name])][0])
-            if param_types[param_name] == float
-            else str(search_space[param_name].index(value))
+            (
+                str(np.arange(len(search_space[param_name]))[np.isclose(value, search_space[param_name])][0])
+                if param_types[param_name] == float
+                else str(search_space[param_name].index(value))
+            )
             for param_name, value in params.items()
         ]
         param_id = "".join(param_indices)

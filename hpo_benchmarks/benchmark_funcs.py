@@ -1,13 +1,12 @@
 from __future__ import annotations
 
 from abc import ABCMeta
+from abc import abstractmethod
 
 import numpy as np
 
 
 class BaseFunc(metaclass=ABCMeta):
-    _param_range: float
-
     def __init__(self, dim: int):
         self._dim = dim
 
@@ -22,12 +21,23 @@ class BaseFunc(metaclass=ABCMeta):
         return self.__class__.__name__
 
     @property
+    def dim(self) -> int:
+        return self._dim
+
+    @property
+    @abstractmethod
+    def _param_range(self) -> float:
+        raise NotImplementedError
+
+    @property
     def param_range(self) -> tuple[float, float]:
         return (-self._param_range, self._param_range)
 
 
 class Sphere(BaseFunc):
-    _range = 5.0
+    @property
+    def _param_range(self) -> float:
+        return 5.0
 
     def __call__(self, X: np.ndarray) -> float:
         self._validate_dim(X)
@@ -35,7 +45,9 @@ class Sphere(BaseFunc):
 
 
 class Styblinski(BaseFunc):
-    _range = 5.0
+    @property
+    def _param_range(self) -> float:
+        return 5.0
 
     def __call__(self, X: np.ndarray) -> float:
         self._validate_dim(X)
@@ -46,7 +58,9 @@ class Styblinski(BaseFunc):
 
 
 class Rastrigin(BaseFunc):
-    _range = 5.12
+    @property
+    def _param_range(self) -> float:
+        return 5.12
 
     def __call__(self, X: np.ndarray) -> float:
         self._validate_dim(X)
@@ -58,7 +72,9 @@ class Rastrigin(BaseFunc):
 
 
 class Schwefel(BaseFunc):
-    _param_range = 500.0
+    @property
+    def _param_range(self) -> float:
+        return 500.0
 
     def __call__(self, X: np.ndarray) -> float:
         self._validate_dim(X)
@@ -66,7 +82,9 @@ class Schwefel(BaseFunc):
 
 
 class Ackley(BaseFunc):
-    _param_range = 32.768
+    @property
+    def _param_range(self) -> float:
+        return 32.768
 
     def __call__(self, X: np.ndarray) -> float:
         self._validate_dim(X)
@@ -76,7 +94,9 @@ class Ackley(BaseFunc):
 
 
 class Griewank(BaseFunc):
-    _param_range = 600.0
+    @property
+    def _param_range(self) -> float:
+        return 600.0
 
     def __call__(self, X: np.ndarray) -> float:
         self._validate_dim(X)
@@ -87,7 +107,9 @@ class Griewank(BaseFunc):
 
 
 class Perm(BaseFunc):
-    _param_range = 1.0
+    @property
+    def _param_range(self) -> float:
+        return 1.0
 
     def __call__(self, X: np.ndarray) -> float:
         self._validate_dim(X)
@@ -103,7 +125,9 @@ class Perm(BaseFunc):
 
 
 class KTablet(BaseFunc):
-    _param_range = 5.12
+    @property
+    def _param_range(self) -> float:
+        return 5.12
 
     def __call__(self, X: np.ndarray) -> float:
         self._validate_dim(X)
@@ -114,7 +138,9 @@ class KTablet(BaseFunc):
 
 
 class WeightedSphere(BaseFunc):
-    _param_range = 5.0
+    @property
+    def _param_range(self) -> float:
+        return 5.0
 
     def __call__(self, X: np.ndarray) -> float:
         self._validate_dim(X)
@@ -124,7 +150,9 @@ class WeightedSphere(BaseFunc):
 
 
 class Rosenbrock(BaseFunc):
-    _param_range = 5.0
+    @property
+    def _param_range(self) -> float:
+        return 5.0
 
     def __call__(self, X: np.ndarray) -> float:
         self._validate_dim(X)
@@ -134,7 +162,9 @@ class Rosenbrock(BaseFunc):
 
 
 class DifferentPower(BaseFunc):
-    _param_range = 1.0
+    @property
+    def _param_range(self) -> float:
+        return 1.0
 
     def __call__(self, X: np.ndarray) -> float:
         self._validate_dim(X)
@@ -144,7 +174,9 @@ class DifferentPower(BaseFunc):
 
 
 class XinSheYang(BaseFunc):
-    _param_range = 2 * np.pi
+    @property
+    def _param_range(self) -> float:
+        return 2 * np.pi
 
     def __call__(self, X: np.ndarray) -> float:
         self._validate_dim(X)
@@ -152,7 +184,9 @@ class XinSheYang(BaseFunc):
 
 
 class Levy(BaseFunc):
-    _param_range = 10.0
+    @property
+    def _param_range(self) -> float:
+        return 10.0
 
     def __call__(self, X: np.ndarray) -> float:
         self._validate_dim(X)
@@ -164,7 +198,9 @@ class Levy(BaseFunc):
 
 
 class Michalewicz(BaseFunc):
-    _param_range = np.pi / 2
+    @property
+    def _param_range(self) -> float:
+        return np.pi / 2
 
     def __call__(self, X: np.ndarray) -> float:
         self._validate_dim(X)
@@ -174,7 +210,9 @@ class Michalewicz(BaseFunc):
 
 
 class DixonPrice(BaseFunc):
-    _param_range = 10.0
+    @property
+    def _param_range(self) -> float:
+        return 10.0
 
     def __call__(self, X: np.ndarray) -> float:
         self._validate_dim(X)
@@ -185,7 +223,9 @@ class DixonPrice(BaseFunc):
 
 
 class Powell(BaseFunc):
-    _param_range = 5.0
+    @property
+    def _param_range(self) -> float:
+        return 5.0
 
     def __call__(self, X: np.ndarray) -> float:
         self._validate_dim(X)
@@ -202,8 +242,11 @@ class Powell(BaseFunc):
 
 
 class Langermann(BaseFunc):
-    _param_range = 5.0
     _rng = np.random.default_rng(42)
+
+    @property
+    def _param_range(self) -> float:
+        return 5.0
 
     def __call__(self, X: np.ndarray) -> float:
         self._validate_dim(X)

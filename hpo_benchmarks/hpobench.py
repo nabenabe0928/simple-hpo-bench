@@ -29,25 +29,10 @@ class HPOBench(BaseHPOBench):
                 2.1544348e-3,
                 1.6681006e-2,
                 1.2915497e-1,
-                1
-            ],
-            "batch_size": [
-                4,
-                6,
-                10,
-                16,
-                25,
-                40,
-                64,
-                101,
-                161,
-                256
-            ],
-            "depth": [
                 1,
-                2,
-                3
             ],
+            "batch_size": [4, 6, 10, 16, 25, 40, 64, 101, 161, 256],
+            "depth": [1, 2, 3],
             "learning_rate_init": [
                 1e-5,
                 3.5938137e-5,
@@ -58,28 +43,11 @@ class HPOBench(BaseHPOBench):
                 2.1544347e-2,
                 7.742637e-2,
                 2.7825594e-1,
-                1
+                1,
             ],
-            "width": [
-                16,
-                25,
-                40,
-                64,
-                101,
-                161,
-                256,
-                406,
-                645,
-                1024
-            ],
+            "width": [16, 25, 40, 64, 101, 161, 256, 406, 645, 1024],
         }
 
     @property
     def param_types(self) -> dict[str, type[int | float | str]]:
-        return {
-            "alpha": float,
-            "batch_size": int,
-            "depth": int,
-            "learning_rate_init": float,
-            "width": int,
-        }
+        return {"alpha": float, "batch_size": int, "depth": int, "learning_rate_init": float, "width": int}
