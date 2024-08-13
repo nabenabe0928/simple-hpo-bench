@@ -6,11 +6,17 @@ This repository provides a set of simple single-objective HPO benchmark datasets
 - [NAS-Bench-201](https://github.com/D-X-Y/NATS-Bench)
 - Continuous Famous Benchmark Functions
 
-# Requirements
+# Installation & Requirements
 
 The requirements of this repository are:
 - Python 3.7 or later
 - NumPy
+
+You can simply install the package via:
+
+```shell
+$ pip install simple-hpo-bench
+```
 
 # Examples
 
@@ -24,11 +30,13 @@ import optuna
 from hpo_benchmarks import HPOBench
 
 
+# Instatiate the benchmark function.
 bench = HPOBench(dataset_name="australian")
 
 
 def objective(trial: optuna.Trial) -> float:
     params = {}
+    # search_space is a dict that takes a parameter name as a key and the corresponding parameter's choices as a value.
     for param_name, choices in bench.search_space.items():
         params[param_name] = choices[trial.suggest_int(f"{param_name}_index", low=0, high=len(choices) - 1)]
 
