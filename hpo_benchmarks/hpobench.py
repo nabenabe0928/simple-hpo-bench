@@ -13,10 +13,6 @@ class HPOBench(BaseHPOBench):
         return "hpobench"
 
     @property
-    def direction(self) -> str:
-        return "maximize"
-
-    @property
     def search_space(self) -> dict[str, list[int | float | str]]:
         return {
             "alpha": [
@@ -51,3 +47,11 @@ class HPOBench(BaseHPOBench):
     @property
     def param_types(self) -> dict[str, type[int | float | str]]:
         return {"alpha": float, "batch_size": int, "depth": int, "learning_rate_init": float, "width": int}
+
+    @property
+    def _metric_directions(self) -> dict[str, str]:
+        return {"train_time": "minimize", "val_acc": "maximize", "val_precision": "maximize", "val_f1": "maximize"}
+
+    @property
+    def _main_metric_name(self) -> str:
+        return "val_acc"

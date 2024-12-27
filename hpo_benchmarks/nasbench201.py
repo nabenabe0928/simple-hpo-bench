@@ -23,3 +23,11 @@ class NASBench201(BaseHPOBench):
     @property
     def param_types(self) -> dict[str, type[int | float | str]]:
         return {f"Op{i}": str for i in range(6)}
+
+    @property
+    def _metric_directions(self) -> dict[str, str]:
+        return {"train_time": "minimize", "val_acc": "maximize", "model_size": "minimize", "latency": "minimize"}
+
+    @property
+    def _main_metric_name(self) -> str:
+        return "val_acc"

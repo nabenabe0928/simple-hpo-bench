@@ -16,8 +16,8 @@ def objective(trial: optuna.Trial) -> float:
         else:
             params[param_name] = choices[trial.suggest_int(f"{param_name}_index", low=0, high=len(choices) - 1)]
 
-    return bench(params)
+    return bench(params)[bench.metric_names[0]]
 
 
-study = optuna.create_study(direction=bench.direction)
+study = optuna.create_study(direction=bench.directions[bench.metric_names[0]])
 study.optimize(objective, n_trials=30)

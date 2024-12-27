@@ -13,10 +13,6 @@ class HPOLib(BaseHPOBench):
         return "hpolib"
 
     @property
-    def direction(self) -> str:
-        return "minimize"
-
-    @property
     def search_space(self) -> dict[str, list[int | float | str]]:
         return {
             "activation_fn_1": ["relu", "tanh"],
@@ -43,3 +39,11 @@ class HPOLib(BaseHPOBench):
             "n_units_1": int,
             "n_units_2": int,
         }
+
+    @property
+    def _metric_directions(self) -> dict[str, str]:
+        return {"train_time": "minimize", "val_loss": "minimize", "model_size": "minimize"}
+
+    @property
+    def _main_metric_name(self) -> str:
+        return "val_loss"
