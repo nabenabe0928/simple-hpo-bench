@@ -40,13 +40,16 @@ for i in range(5 ** 6):
     all_results = data["all_results"]
     print(i, config_id)
     for dataset_name, key in dataset_names.items():
-        final_results[dataset_name][config_id] = []
+        row = []
         for seed in [777, 888, 999]:
             results = all_results.get((key, seed), None)
             if results is None:
                 continue
 
-            final_results[dataset_name][config_id].append(extract_result(results))
+            row.append(extract_result(results))
+
+        metric_names = row[0].keys()
+        final_results[dataset_name][config_id] = {mn: [v[mn] for v in row] for mn in metric_names}
 
 for dataset_name, results in final_results.items():
     with open(f"{dataset_name}.pkl", mode="wb") as f:
