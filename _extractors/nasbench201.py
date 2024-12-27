@@ -14,11 +14,11 @@ def extract_result(results: dict[str, Any]) -> dict[str, float]:
     row = {
         # https://github.com/D-X-Y/NATS-Bench/blob/main/nats_bench/api_utils.py#L1306
         "train_time": sum(results["train_times"][e] for e in range(max_epoch)),
-        "train_loss": min(results["train_losses"][e] for e in range(max_epoch)),
-        "train_acc": max(results["train_acc1es"][e] for e in range(max_epoch)),
+        # "train_loss": min(results["train_losses"][e] for e in range(max_epoch)),
+        # "train_acc": max(results["train_acc1es"][e] for e in range(max_epoch)),
         # https://github.com/D-X-Y/NATS-Bench/blob/main/nats_bench/api_utils.py#L1332-L1337
-        "val_time": sum(results["eval_times"][f"x-valid@{e}"] for e in range(max_epoch)),
-        "val_loss": results["eval_losses"][valid_epoch_key],
+        # "val_time": sum(results["eval_times"][f"x-valid@{e}"] for e in range(max_epoch)),
+        # "val_loss": results["eval_losses"][valid_epoch_key],
         "val_acc": results["eval_acc1es"][valid_epoch_key],
         "latency": results["latency"][0],  # ms
         "model_size": results["params"],  # MB

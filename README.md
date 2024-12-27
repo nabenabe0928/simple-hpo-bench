@@ -5,9 +5,9 @@
 </div>
 
 This repository provides a set of simple single-objective HPO benchmark datasets:
-- [HPOBench](https://github.com/automl/hpobench)
-- [HPOLib](https://arxiv.org/abs/1905.04970)
-- [NAS-Bench-201](https://github.com/D-X-Y/NATS-Bench)
+- [HPOBench](https://github.com/automl/hpobench) (Apache-2.0 License)
+- [HPOLib](https://arxiv.org/abs/1905.04970) (BSD-3-Clause License)
+- [NAS-Bench-201](https://github.com/D-X-Y/NATS-Bench) (MIT License)
 
 # Installation & Requirements
 
