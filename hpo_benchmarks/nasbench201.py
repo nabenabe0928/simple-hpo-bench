@@ -13,10 +13,6 @@ class NASBench201(BaseHPOBench):
         return "nasbench201"
 
     @property
-    def direction(self) -> str:
-        return "maximize"
-
-    @property
     def search_space(self) -> dict[str, list[int | float | str]]:
         return {f"Op{i}": ["none", "skip_connect", "nor_conv_1x1", "nor_conv_3x3", "avg_pool_3x3"] for i in range(6)}
 

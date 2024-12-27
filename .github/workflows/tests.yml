@@ -32,7 +32,7 @@ jobs:
     - name: Install
       run: |
         pip install .
-        pip install pytest black flake8 isort mypy
+        pip install pytest black flake8 isort mypy optuna
 
     - name: black
       run: black . --check --diff
