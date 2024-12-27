@@ -3,7 +3,8 @@ import optuna
 from hpo_benchmarks import HPOBench
 
 
-bench = HPOBench(dataset_name="australian")
+bench = HPOBench(dataset_name=HPOBench.available_dataset_names[0])
+print(bench)
 
 
 def objective(trial: optuna.Trial) -> list[float]:

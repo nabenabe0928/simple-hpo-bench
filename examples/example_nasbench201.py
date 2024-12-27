@@ -5,7 +5,8 @@ import optuna
 from hpo_benchmarks import NASBench201
 
 
-bench = NASBench201(dataset_name="imagenet")
+bench = NASBench201(dataset_name=NASBench201.available_dataset_names[0])
+print(bench)
 
 
 def objective(trial: optuna.Trial) -> list[float]:

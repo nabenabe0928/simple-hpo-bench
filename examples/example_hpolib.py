@@ -3,7 +3,7 @@ import optuna
 from hpo_benchmarks import HPOLib
 
 
-bench = HPOLib(dataset_name="naval_propulsion")
+bench = HPOLib(dataset_name=HPOLib.available_dataset_names[0])
 print(bench)
 
 
