@@ -1,8 +1,8 @@
+# Simple HPO Benchmark Datasets
+
 <div>
     <img src="https://img.shields.io/badge/python-3.8%20%7C%203.9%20%7C%203.10%20%7C%203.11%20%7C%203.12%20%7C%203.13-blue" alt="Python"/>
 </div>
-
-# Simple HPO Benchmark Datasets
 
 This repository provides a set of simple single-objective HPO benchmark datasets:
 - [HPOBench](https://github.com/automl/hpobench)
@@ -12,7 +12,7 @@ This repository provides a set of simple single-objective HPO benchmark datasets
 # Installation & Requirements
 
 The requirements of this repository are:
-- Python 3.7 or later
+- Python 3.8 or later
 - NumPy
 
 You can simply install the package via:
