@@ -6,7 +6,10 @@ import pickle
 
 
 data_file_names = [
-    "naval_propulsion.pkl", "parkinsons_telemonitoring.pkl", "protein_structure.pkl", "slice_localization.pkl"
+    "naval_propulsion.pkl",
+    "parkinsons_telemonitoring.pkl",
+    "protein_structure.pkl",
+    "slice_localization.pkl",
 ]
 n_seeds = 4
 dir_path = os.path.join(os.environ["HOME"], "hpo_benchmarks", "hpolib")
@@ -18,9 +21,9 @@ for fn in data_file_names:
     for i, (config_id, results) in enumerate(dataset.items()):
         print(i, config_id)
         modified_dataset[config_id] = {
-            "train_time": [float(v[100]) for v in dataset[config_id]["valid_mse"]],
-            "val_loss": [float(v) for v in dataset[config_id]["runtime"]],
-            "model_size": [float(dataset[config_id]["n_params"])]*n_seeds,
+            "train_time": [float(v) for v in dataset[config_id]["runtime"]],
+            "val_loss": [float(v[100]) for v in dataset[config_id]["valid_mse"]],
+            "model_size": [float(dataset[config_id]["n_params"])] * n_seeds,
         }
-    with open(fn, mode="wb") as f:
+    with open(f"hpo_benchmarks/datasets/hpolib/{fn}", mode="wb") as f:
         pickle.dump(modified_dataset, f)
