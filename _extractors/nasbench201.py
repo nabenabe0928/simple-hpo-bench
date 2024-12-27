@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from typing import Any
+
 # NATS-tss-v1_0-3ffb9-simple.tar
 # https://github.com/D-X-Y/NATS-Bench/blob/main/nats_bench/api_utils.py#L845-L880
 import bz2
@@ -32,9 +34,9 @@ def convert_arch_str_to_config_id(arch_str: str) -> str:
     return config_id
 
 
-final_results = {"imagenet": {}, "cifar10": {}, "cifar100": {}}
+final_results: dict[str, dict[str, dict[str, list[float]]]] = {"imagenet": {}, "cifar10": {}, "cifar100": {}}
 dataset_names = {"imagenet": "ImageNet16-120", "cifar10": "cifar10-valid", "cifar100": "cifar100"}
-for i in range(5 ** 6):
+for i in range(5**6):
     data = pickle.load(bz2.open(f"NATS-tss-v1_0-3ffb9-simple/{i:0>6}.pickle.pbz2", mode="rb"))["200"]
     config_id = convert_arch_str_to_config_id(data["arch_str"])
     all_results = data["all_results"]

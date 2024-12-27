@@ -1,9 +1,5 @@
 from __future__ import annotations
 
-import pickle
-
-import numpy as np
-
 from hpo_benchmarks.base import BaseHPOBench
 
 
