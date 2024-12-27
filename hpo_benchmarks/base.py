@@ -10,8 +10,8 @@ import numpy as np
 
 class BaseHPOBench(metaclass=ABCMeta):
     def __init__(self, dataset_name: str, seed: int | None = None, metric_names: list[str] | None = None):
-        if dataset_name not in self._dataset_names:
-            raise ValueError(f"dataset_name must be in {self._dataset_names}, but got {dataset_name}.")
+        if dataset_name not in self.available_dataset_names:
+            raise ValueError(f"dataset_name must be in {self.available_dataset_names}, but got {dataset_name}.")
         if metric_names is not None and any(mn not in self._metric_directions for mn in metric_names):
             raise ValueError(f"metric_names must be in {list(self._metric_directions.keys())}, but got {metric_names}.")
 
@@ -46,39 +46,50 @@ class BaseHPOBench(metaclass=ABCMeta):
         return {name: vals[name][seed] for name in self._metric_names}
 
     @property
-    @abstractmethod
-    def _dataset_names(self) -> list[str]:
-        raise NotImplementedError
-
-    @property
-    @abstractmethod
-    def _bench_name(self) -> str:
-        raise NotImplementedError
-
-    @property
-    def metric_names(self) -> list[str]:
-        return self._metric_names.copy()
-
-    @property
-    @abstractmethod
-    def _metric_directions(self) -> dict[str, str]:
-        raise NotImplementedError
-
-    @property
     def directions(self) -> dict[str, str]:
         metric_directions = self._metric_directions
         return {name: metric_directions[name] for name in self._metric_names}
 
     @property
+    def metric_names(self) -> list[str]:
+        return self._metric_names.copy()
+
+    @classmethod
+    @property
+    def available_metric_names(self) -> list[str]:
+        return list(self._metric_directions.keys())
+
+    @classmethod
+    @property
     @abstractmethod
     def search_space(self) -> dict[str, list[int | float | str]]:
         raise NotImplementedError
 
+    @classmethod
     @property
     @abstractmethod
     def param_types(self) -> dict[str, type[int | float | str]]:
         raise NotImplementedError
 
+    @classmethod
+    @property
+    @abstractmethod
+    def available_dataset_names(self) -> list[str]:
+        raise NotImplementedError
+
+    @classmethod
+    @property
+    @abstractmethod
+    def _bench_name(self) -> str:
+        raise NotImplementedError
+
+    @classmethod
+    @property
+    @abstractmethod
+    def _metric_directions(self) -> dict[str, str]:
+        raise NotImplementedError
+
+    @classmethod
     @property
     @abstractmethod
     def _main_metric_name(self) -> str:

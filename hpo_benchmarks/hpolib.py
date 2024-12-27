@@ -4,14 +4,17 @@ from hpo_benchmarks.base import BaseHPOBench
 
 
 class HPOLib(BaseHPOBench):
+    @classmethod
     @property
-    def _dataset_names(self) -> list[str]:
+    def available_dataset_names(self) -> list[str]:
         return ["naval_propulsion", "parkinsons_telemonitoring", "protein_structure", "slice_localization"]
 
+    @classmethod
     @property
     def _bench_name(self) -> str:
         return "hpolib"
 
+    @classmethod
     @property
     def search_space(self) -> dict[str, list[int | float | str]]:
         return {
@@ -26,6 +29,7 @@ class HPOLib(BaseHPOBench):
             "n_units_2": [16, 32, 64, 128, 256, 512],
         }
 
+    @classmethod
     @property
     def param_types(self) -> dict[str, type[int | float | str]]:
         return {
@@ -40,10 +44,12 @@ class HPOLib(BaseHPOBench):
             "n_units_2": int,
         }
 
+    @classmethod
     @property
     def _metric_directions(self) -> dict[str, str]:
         return {"train_time": "minimize", "val_loss": "minimize", "model_size": "minimize"}
 
+    @classmethod
     @property
     def _main_metric_name(self) -> str:
         return "val_loss"

@@ -23,7 +23,7 @@ setuptools.setup(
     url="https://github.com/nabenabe0928/simple-hpo-bench",
     packages=["hpo_benchmarks/"] + dataset_dirs,
     package_data={"": dataset_file_names},
-    python_requires=">=3.7",
+    python_requires=">=3.9",
     platforms=["Linux", "Darwin"],
     install_requires=requirements,
     include_package_data=True,

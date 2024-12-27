@@ -4,14 +4,17 @@ from hpo_benchmarks.base import BaseHPOBench
 
 
 class HPOBench(BaseHPOBench):
+    @classmethod
     @property
-    def _dataset_names(self) -> list[str]:
+    def available_dataset_names(self) -> list[str]:
         return ["car", "phoneme", "vehicle", "australian", "kc1", "segment", "blood_transfusion", "credit_g"]
 
+    @classmethod
     @property
     def _bench_name(self) -> str:
         return "hpobench"
 
+    @classmethod
     @property
     def search_space(self) -> dict[str, list[int | float | str]]:
         return {
@@ -44,14 +47,17 @@ class HPOBench(BaseHPOBench):
             "width": [16, 25, 40, 64, 101, 161, 256, 406, 645, 1024],
         }
 
+    @classmethod
     @property
     def param_types(self) -> dict[str, type[int | float | str]]:
         return {"alpha": float, "batch_size": int, "depth": int, "learning_rate_init": float, "width": int}
 
+    @classmethod
     @property
     def _metric_directions(self) -> dict[str, str]:
         return {"train_time": "minimize", "val_acc": "maximize", "val_precision": "maximize", "val_f1": "maximize"}
 
+    @classmethod
     @property
     def _main_metric_name(self) -> str:
         return "val_acc"
