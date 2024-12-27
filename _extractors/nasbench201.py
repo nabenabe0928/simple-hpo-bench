@@ -53,5 +53,5 @@ for i in range(5**6):
         final_results[dataset_name][config_id] = {mn: [v[mn] for v in row] for mn in metric_names}
 
 for dataset_name, results in final_results.items():
-    with open(f"hpo_benchmarks/datasets/hpolib/{dataset_name}.pkl", mode="wb") as f:
+    with open(f"hpo_benchmarks/datasets/nasbench201/{dataset_name}.pkl", mode="wb") as f:
         pickle.dump(results, f)
