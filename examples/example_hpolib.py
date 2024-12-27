@@ -12,9 +12,12 @@ def objective(trial: optuna.Trial) -> float:
     params = {}
     for param_name, choices in bench.search_space.items():
         if param_types[param_name] == str:
-            params[param_name] = trial.suggest_categorical(param_name, choices)
+            choice = trial.suggest_categorical(param_name, choices)
+            assert choice is not None, "MyPy Redefinition."
         else:
-            params[param_name] = choices[trial.suggest_int(f"{param_name}_index", low=0, high=len(choices) - 1)]
+            choice = choices[trial.suggest_int(f"{param_name}_index", low=0, high=len(choices) - 1)]
+
+        params[param_name] = choice
 
     return bench(params)[bench.metric_names[0]]
 

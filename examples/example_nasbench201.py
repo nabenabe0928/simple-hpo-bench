@@ -11,7 +11,9 @@ bench = NASBench201(dataset_name="imagenet")
 def objective(trial: optuna.Trial) -> float:
     params = {}
     for param_name, choices in bench.search_space.items():
-        params[param_name] = trial.suggest_categorical(param_name, choices)
+        choice = trial.suggest_categorical(param_name, choices)
+        assert choice is not None, "MyPy Redefinition."
+        params[param_name] = choice
 
     return bench(params)[bench.metric_names[0]]
 

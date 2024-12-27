@@ -2,17 +2,20 @@ from __future__ import annotations
 
 import itertools
 
+import optuna
+import pytest
+
 from hpo_benchmarks import HPOBench
 from hpo_benchmarks import HPOLib
 from hpo_benchmarks import NASBench201
 from hpo_benchmarks.base import BaseHPOBench
-import optuna
-import pytest
 
 
 def _get_metric_choices(metric_names: list[str]) -> list[None | list[str]]:
     return [None] + list(
-        itertools.chain(*[[list(it) for it in itertools.combinations(metric_names, i + 1)] for i in range(len(metric_names))])
+        itertools.chain(
+            *[[list(it) for it in itertools.combinations(metric_names, i + 1)] for i in range(len(metric_names))]
+        )
     )
 
 
@@ -62,9 +65,12 @@ def test_hpolib(dataset_name: str, metric_choices: list[str] | None) -> None:
         params = {}
         for param_name, choices in bench.search_space.items():
             if param_types[param_name] == str:
-                params[param_name] = trial.suggest_categorical(param_name, choices)
+                choice = trial.suggest_categorical(param_name, choices)
+                assert choice is not None, "MyPy Redefinition."
             else:
-                params[param_name] = choices[trial.suggest_int(f"{param_name}_index", low=0, high=len(choices) - 1)]
+                choice = choices[trial.suggest_int(f"{param_name}_index", low=0, high=len(choices) - 1)]
+
+            params[param_name] = choice
 
         results = bench(params)
         return [results[name] for name in bench.metric_names]
@@ -82,7 +88,9 @@ def test_nasbench201(dataset_name: str, metric_choices: list[str] | None) -> Non
     def objective(trial: optuna.Trial) -> list[float]:
         params = {}
         for param_name, choices in bench.search_space.items():
-            params[param_name] = trial.suggest_categorical(param_name, choices)
+            choice = trial.suggest_categorical(param_name, choices)
+            assert choice is not None, "MyPy Redefinition."
+            params[param_name] = choice
 
         results = bench(params)
         return [results[name] for name in bench.metric_names]
