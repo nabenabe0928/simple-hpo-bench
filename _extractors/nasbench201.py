@@ -10,7 +10,7 @@ from typing import Any
 def extract_result(results: dict[str, Any]) -> dict[str, float]:
     max_epoch = 200
     # valid_epoch_key = f"x-valid@{max_epoch-1}"
-    valid_epoch_key = f"x-valid@{max_epoch-1}"
+    valid_epoch_key = f"x-valid@{max_epoch - 1}"
     row = {
         # https://github.com/D-X-Y/NATS-Bench/blob/main/nats_bench/api_utils.py#L1306
         "train_time": sum(results["train_times"][e] for e in range(max_epoch)),
