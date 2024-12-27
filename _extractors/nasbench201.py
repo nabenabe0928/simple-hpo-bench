@@ -1,11 +1,10 @@
 from __future__ import annotations
 
-from typing import Any
-
 # NATS-tss-v1_0-3ffb9-simple.tar
 # https://github.com/D-X-Y/NATS-Bench/blob/main/nats_bench/api_utils.py#L845-L880
 import bz2
 import pickle
+from typing import Any
 
 
 def extract_result(results: dict[str, Any]) -> dict[str, float]:
