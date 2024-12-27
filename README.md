@@ -28,25 +28,27 @@ Examples are available at [examples/](./examples/).
 For example, `HPOBench` can be optimized by Optuna as follows:
 
 ```python
-import optuna
+from __future__ import annotations
 
 from hpo_benchmarks import HPOBench
+
+import optuna
 
 
 # Instatiate the benchmark function.
 bench = HPOBench(dataset_name="australian")
 
 
-def objective(trial: optuna.Trial) -> float:
+def objective(trial: optuna.Trial) -> list[float]:
     params = {}
-    # search_space is a dict that takes a parameter name as a key and the corresponding parameter's choices as a value.
     for param_name, choices in bench.search_space.items():
         params[param_name] = choices[trial.suggest_int(f"{param_name}_index", low=0, high=len(choices) - 1)]
 
-    return bench(params)
+    results = bench(params)
+    return [results[name] for name in bench.metric_names]
 
 
-study = optuna.create_study(direction=bench.direction)
+study = optuna.create_study(direction=[bench.directions[name] for name in bench.metric_names])
 study.optimize(objective, n_trials=30)
 
 ```
