@@ -4,3 +4,4 @@ venv/
 build/
 dist/
 *.egg-info/
+NATS-tss-v1_0-3ffb9-simple/
