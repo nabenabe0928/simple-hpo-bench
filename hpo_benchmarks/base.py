@@ -23,6 +23,9 @@ class BaseHPOBench(metaclass=ABCMeta):
         self._rng = np.random.default_rng(seed)
         self._metric_names = metric_names.copy() if metric_names is not None else [self._main_metric_name]
 
+    def reseed(self, seed: int | None = None) -> None:
+        self._rng = np.random.default_rng(seed)
+
     def __str__(self) -> str:
         return f'{self.__class__.__name__}(dataset_name="{self._dataset_name}", metric_names={self._metric_names})'
 

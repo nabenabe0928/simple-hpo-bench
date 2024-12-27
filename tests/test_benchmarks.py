@@ -107,3 +107,31 @@ def test_hpolib_properties() -> None:
 
 def test_nasbench201_properties() -> None:
     _validate_bench_properties(NASBench201("imagenet"))
+
+
+def _validate_bench_reproducibility(bench: BaseHPOBench) -> None:
+    params = {k: choices[0] for k, choices in bench.search_space.items()}
+
+    bench.reseed(42)
+    out1 = [bench(params) for _ in range(10)]
+    bench.reseed(42)
+    out2 = [bench(params) for _ in range(10)]
+    assert all(o1 == o2 for o1, o2 in zip(out1, out2))
+
+    bench.reseed()
+    out1 = [bench(params) for _ in range(10)]
+    bench.reseed()
+    out2 = [bench(params) for _ in range(10)]
+    assert any(o1 != o2 for o1, o2 in zip(out1, out2))
+
+
+def test_hpobench_reproducibility() -> None:
+    _validate_bench_reproducibility(HPOBench("australian"))
+
+
+def test_hpolib_reproducibility() -> None:
+    _validate_bench_reproducibility(HPOLib("naval_propulsion"))
+
+
+def test_nasbench201_reproducibility() -> None:
+    _validate_bench_reproducibility(NASBench201("imagenet"))
