@@ -52,6 +52,8 @@ hpolib_properties = _HPOLibPropertiesClass(
 
 
 class HPOLib(BaseHPOBenchmark):
+    """TODO"""
+
     available_metric_names: list[str] = hpolib_properties.available_metric_names
     search_space: dict[str, list[int | float | str]] = hpolib_properties.search_space
     param_types: dict[str, type[int | float | str]] = hpolib_properties.param_types

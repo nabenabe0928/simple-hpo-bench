@@ -70,6 +70,8 @@ hpobench_properties = _HPOBenchPropertiesClass(
 
 
 class HPOBench(BaseHPOBenchmark):
+    """TODO"""
+    
     available_metric_names: list[str] = hpobench_properties.available_metric_names
     search_space: dict[str, list[int | float | str]] = hpobench_properties.search_space
     param_types: dict[str, type[int | float | str]] = hpobench_properties.param_types

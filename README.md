@@ -36,7 +36,8 @@ import optuna
 
 
 # Instatiate the benchmark function.
-bench = HPOBench(dataset_name="australian")
+bench = HPOBench(dataset_name=HPOBench.available_dataset_names[0])
+print(bench)
 
 
 def objective(trial: optuna.Trial) -> list[float]:
@@ -53,11 +54,24 @@ study.optimize(objective, n_trials=30)
 
 ```
 
-For benchmark functions, the argument for these classes is only `dim`, which determines the dimension of the function.
-
 For tabular benchmarks (`HPOLib`, `HPOBench`, and `NASBench201`), the arguments are:
 - `dataset_name`: one of the dataset names of the benchmark dataset of interest, and
 - `seed`: the random seed for the benchmark dataset.
+- `metric_names`: a list of metric names to fetch from the benchmark datasets. The available metric names can be found in the `available_metric_names` attribute. If not specified, we return only the main metric.
+
+Class attributes available to users are:
+- `available_metric_names`: A list of available metric names.
+- `available_dataset_names`: A list of available dataset names.
+- `search_space`: The choices of each parameter.
+- `param_types`: The data type of each parameter.
+
+Instance attributes available to users are:
+- `directions`: The directions (`minimize` or `maximize`) of each metric specified by the user.
+- `metric_names`: The user-specified list of metrics to optimize.
+
+The methods provided to users are:
+- `reseed`: Reset the random seed to the provided seed.
+- `__call__`: The method to evaluate the provided parameters and return the corresponding metrics.
 
 The available dataset names for each benchmark dataset are as follows:
 
