@@ -3,7 +3,7 @@ from hpo_benchmarks.hpolib import HPOLib
 from hpo_benchmarks.nasbench201 import NASBench201
 
 
-__version__ = "0.1.0"
+__version__ = "0.2.0"
 __copyright__ = "Copyright (C) 2024 Shuhei Watanabe"
 __licence__ = "Apache-2.0 License"
 __author__ = "Shuhei Watanabe"

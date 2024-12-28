@@ -17,7 +17,7 @@ for target in dataset_dirs:
 
 setuptools.setup(
     name="simple-hpo-bench",
-    version="0.1.0",
+    version="0.2.0",
     author="nabenabe0928",
     author_email="shuhei.watanabe.utokyo@gmail.com",
     url="https://github.com/nabenabe0928/simple-hpo-bench",
