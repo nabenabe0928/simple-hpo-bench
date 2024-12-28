@@ -8,7 +8,6 @@ import pytest
 from hpo_benchmarks import HPOBench
 from hpo_benchmarks import HPOLib
 from hpo_benchmarks import NASBench201
-from hpo_benchmarks.base import BaseHPOBenchmark
 from hpo_benchmarks.base import BaseDatasetProperties
 from hpo_benchmarks.base import HPOBenchmarkInterface
 from hpo_benchmarks.hpobench import hpobench_properties
