@@ -8,7 +8,12 @@ import pytest
 from hpo_benchmarks import HPOBench
 from hpo_benchmarks import HPOLib
 from hpo_benchmarks import NASBench201
-from hpo_benchmarks.base import BaseHPOBench
+from hpo_benchmarks.base import BaseHPOBenchmark
+from hpo_benchmarks.base import BaseDatasetProperties
+from hpo_benchmarks.base import HPOBenchmarkInterface
+from hpo_benchmarks.hpobench import hpobench_properties
+from hpo_benchmarks.hpolib import hpolib_properties
+from hpo_benchmarks.nasbench201 import nb201_properties
 
 
 def _get_metric_choices(metric_names: list[str]) -> list[None | list[str]]:
@@ -27,7 +32,7 @@ HPOLIB_METRIC_CHOICES = _get_metric_choices(list(HPOLib.available_metric_names))
 NB201_METRIC_CHOICES = _get_metric_choices(list(NASBench201.available_metric_names))
 
 
-def _validate_metric_names(metric_choices: list[str] | None, bench: BaseHPOBench) -> None:
+def _validate_metric_names(metric_choices: list[str] | None, bench: HPOBenchmarkInterface) -> None:
     if metric_choices is None:
         metric_names = bench.metric_names
         assert metric_names is not None and len(metric_names) == 1
@@ -99,16 +104,16 @@ def test_nasbench201(dataset_name: str, metric_choices: list[str] | None) -> Non
     study.optimize(objective, n_trials=30)
 
 
-@pytest.mark.parametrize("bench_cls", (HPOBench, HPOLib, NASBench201))
-def test_bench_properties(bench_cls: type[BaseHPOBench]) -> None:
-    assert all(d in ("maximize", "minimize") for d in bench_cls._metric_directions.values())
-    assert all(name in bench_cls._metric_directions for name in bench_cls.available_metric_names)
-    assert set(bench_cls.search_space.keys()) == set(bench_cls.param_types.keys())
-    assert all(isinstance(choices[0], bench_cls.param_types[k]) for k, choices in bench_cls.search_space.items())
+@pytest.mark.parametrize("bench_props", (hpobench_properties, hpolib_properties, nb201_properties))
+def test_bench_properties(bench_props: BaseDatasetProperties) -> None:
+    assert all(d in ("maximize", "minimize") for d in bench_props._metric_directions.values())
+    assert all(name in bench_props._metric_directions for name in bench_props.available_metric_names)
+    assert set(bench_props.search_space.keys()) == set(bench_props.param_types.keys())
+    assert all(isinstance(choices[0], bench_props.param_types[k]) for k, choices in bench_props.search_space.items())
 
 
 @pytest.mark.parametrize("bench_cls", (HPOBench, HPOLib, NASBench201))
-def test_bench_reproducibility(bench_cls: type[BaseHPOBench]) -> None:
+def test_bench_reproducibility(bench_cls: type[HPOBenchmarkInterface]) -> None:
     bench = bench_cls(bench_cls.available_dataset_names[0])
     params = {k: choices[0] for k, choices in bench_cls.search_space.items()}
 

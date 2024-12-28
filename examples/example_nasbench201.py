@@ -19,5 +19,6 @@ def objective(trial: optuna.Trial) -> list[float]:
     results = bench(params)
     return [results[name] for name in bench.metric_names]
 
+
 study = optuna.create_study(directions=[bench.directions[name] for name in bench.metric_names])
 study.optimize(objective, n_trials=30)
